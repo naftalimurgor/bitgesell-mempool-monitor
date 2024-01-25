@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# Bitgesell Mempool Monitor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This web application provides a real-time view of the Bitgesell mempool, allowing users to monitor pending transactions and their status. It is built using Create React App and utilizes Bitgesell's API to fetch mempool data.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Real-time Mempool Data:** View the latest information about pending transactions in the Bitgesell mempool.
+- **Transaction Details:** Click on a transaction to see detailed information, including transaction hash, fee, inputs, outputs, and more.
+- **User-Friendly Interface:** The application offers an intuitive and user-friendly design for easy navigation.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Prerequisites
 
-### `npm test`
+Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your machine.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
 
-### `npm run build`
+1. Clone the repository:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   git clone https://github.com/naftalimurgor/bitgesell-mempool-monitor.git
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Change to the project directory:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   cd bitgesell-mempool-monitor
+   ```
 
-### `npm run eject`
+3. Install dependencies:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```bash
+   npm install
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Start the development server:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```bash
+   npm start
+   ```
 
-## Learn More
+   This will open the application in your default web browser and run a dev server at port 3000.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Explore the Bitgesell Mempool Monitor and enjoy real-time updates on the Bitgesell mempool.
+## API
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please see full [API documentation](https://github.com/bitaps-com/bglapiserver/tree/master/api)
+
+## Contributing
+
+If you'd like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix: `git checkout -b feature/new-feature`.
+3. Make your changes and commit them: `git commit -m 'Add new feature'`.
+4. Push your changes to your fork: `git push origin feature/new-feature`.
+5. Create a pull request, explaining your changes and why they should be merged.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thanks to the [Bitgesell](https://bitgesell.ca/) team for providing the API used in this application.
+- This project was bootstrapped with [Create React App](https://create-react-app.dev/).
+
+---
+
+Feel free to customize this README according to your project's specific details and requirements.
