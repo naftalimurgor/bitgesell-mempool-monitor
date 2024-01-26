@@ -185,7 +185,7 @@ function App() {
   const [mempoolTransactions, setMempoolTransactions] = React.useState<MempoolTxes | null>(null)
   const [txsearch, setTxsearch] = React.useState('')
   const [activeTab, setActiveTab] = React.useState<ActiveTab>('metrics')
-  const [mempoolAgeMap, setMempoolAgeMap] = React.useState({})
+  // const [mempoolAgeMap, setMempoolAgeMap] = React.useState({})
 
   React.useEffect(() => {
     async function getMempoolState() {
@@ -193,7 +193,7 @@ function App() {
         const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/state', { method: 'GET' })
         const mempoolState = await res.json() as MempoolState
         setMempool(mempoolState)
-        setMempoolAgeMap(mempoolState.data.inputs.ageMap)
+        // setMempoolAgeMap(mempoolState.data.inputs.ageMap)
 
       } catch (error) {
         setMempool(null)
@@ -339,7 +339,7 @@ function App() {
     if (ageMap?.['1y']) {
       const DATA_COUNT = 3; // 3 year gap
       // @ts-ignore
-      const NUMBER_CFG = { count: DATA_COUNT, min: ageMap["1y"].amount, max: ageMap["3y"].amount };
+      // const NUMBER_CFG = { count: DATA_COUNT, min: ageMap["1y"].amount, max: ageMap["3y"].amount };
 
       const labels = ['1y', '2y', '3y']
       const data = {
