@@ -337,7 +337,7 @@ function App() {
     const ageMap = mempool?.data.inputs.ageMap
 
     if (ageMap?.['1y']) {
-      const DATA_COUNT = 3; // 3 year gap
+      // const DATA_COUNT = 3; // 3 year gap
       // @ts-ignore
       // const NUMBER_CFG = { count: DATA_COUNT, min: ageMap["1y"].amount, max: ageMap["3y"].amount };
 
