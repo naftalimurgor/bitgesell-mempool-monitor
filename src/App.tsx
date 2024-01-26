@@ -189,6 +189,7 @@ function App() {
 
   React.useEffect(() => {
     async function getMempoolState() {
+      let err = null
       try {
         const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/state', { method: 'GET' })
         const mempoolState = await res.json() as MempoolState
@@ -197,7 +198,14 @@ function App() {
 
       } catch (error) {
         setMempool(null)
-        alert('Network Error- Check your Internet connection')
+        // alert('Network Error- Check your Internet connection')
+      } finally {
+        if (err !== null) {
+          const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/state', { method: 'GET' })
+          const mempoolState = await res.json() as MempoolState
+          setMempool(mempoolState)
+          // setMempoolAgeMap(mempoolState.data.inputs.ageMap)
+        }
       }
     }
     getMempoolState()
@@ -223,8 +231,9 @@ function App() {
       } catch (error) {
         // setMempoolTransactions(null)
         err = error
-        alert('Network Error- Check your Internet connection')
+        // alert('Network Error- Check your Internet connection')
       } finally {
+        console.log(err)
         if (err) {
           const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/transactions', { method: 'GET' })
           const mempoolTransactions = await res.json() as MempoolTxes
@@ -359,7 +368,7 @@ function App() {
           //   borderColor: '#0000ff',
           //   backgroundColor: '#0000ff',
           // }
-    
+
         ]
 
       };
