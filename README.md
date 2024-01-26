@@ -47,6 +47,7 @@ Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.co
    This will open the application in your default web browser and run a dev server at port 3000.
 
 2. Explore the Bitgesell Mempool Monitor and enjoy real-time updates on the Bitgesell mempool.
+![Alt text](./overview.png "Mempool transactions")
 ## API
 
 Please see full [API documentation](https://github.com/bitaps-com/bglapiserver/tree/master/api)
