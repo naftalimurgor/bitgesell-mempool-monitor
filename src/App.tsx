@@ -346,7 +346,7 @@ function App() {
         labels: labels,
         datasets: [
           {
-            label: 'Amount (BGL)',
+            label: 'Shows the distribution of Bitgesell transactions based on their age',
             // @ts-ignore
             data: [ageMap["1y"].amount, ageMap["2y"].amount, ageMap['3y'].amount],
 
@@ -359,15 +359,23 @@ function App() {
           //   borderColor: '#0000ff',
           //   backgroundColor: '#0000ff',
           // }
+    
         ]
 
+      };
+      const chartOptions = {
+        scales: {
+          y: {
+            beginAtZero: false,
+          },
+        },
       };
 
       const txCountData = {
         labels: labels,
         datasets: [
           {
-            label: 'Transaction Count 1-3 years',
+            label: 'Transaction Count over age of 1-3 years',
             // @ts-ignore
             data: [ageMap["1y"].count, ageMap["2y"].count, ageMap['3y'].count],
             borderColor: '#0000ff',
@@ -377,11 +385,11 @@ function App() {
 
       };
       return (<div style={{ marginTop: '80px' }}>
-        <h3>Transaction volume in BGL Over ~3 years</h3>
-        <Bar data={data} />
+        <h3>Metrics</h3>
+        <Bar data={data} options={chartOptions} />
         <div style={{ marginTop: '40px' }}>
-        <h3>Transaction Count in BGL Over ~3 years</h3>
-          <Line data={txCountData} />
+          <h3>Transaction Count in BGL Over ~3 years</h3>
+          <Line data={txCountData} options={chartOptions} />
         </div>
       </div>)
 
