@@ -184,27 +184,29 @@ function App() {
   const [mempool, setMempool] = React.useState<MempoolState | null>(null)
   const [mempoolTransactions, setMempoolTransactions] = React.useState<MempoolTxes | null>(null)
   const [txsearch, setTxsearch] = React.useState('')
-  const [activeTab, setActiveTab] = React.useState<ActiveTab>('metrics')
+  const [activeTab, setActiveTab] = React.useState<ActiveTab>('mempool')
   // const [mempoolAgeMap, setMempoolAgeMap] = React.useState({})
 
   React.useEffect(() => {
     async function getMempoolState() {
       let err = null
       try {
-        const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/state', { method: 'GET' })
-        const mempoolState = await res.json() as MempoolState
+        const [stateData, txData] = await Promise.all([
+          await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/state', { method: 'GET' }),
+          await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/transactions', { method: 'GET' })
+        ])
+        const mempoolState = await stateData.json() as MempoolState
+        const txState = await txData.json() as MempoolTxes
+
         setMempool(mempoolState)
         // setMempoolAgeMap(mempoolState.data.inputs.ageMap)
-
+        setMempoolTransactions(txState)
       } catch (error) {
         setMempool(null)
         // alert('Network Error- Check your Internet connection')
       } finally {
         if (err !== null) {
-          const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/state', { method: 'GET' })
-          const mempoolState = await res.json() as MempoolState
-          setMempool(mempoolState)
-          // setMempoolAgeMap(mempoolState.data.inputs.ageMap)
+          
         }
       }
     }
@@ -213,39 +215,6 @@ function App() {
     getMempoolState()
     const intervalId = setInterval(() => {
       getMempoolState()
-    }, REFRESH_TIME_INTERVAL)
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    async function getMempoolTxes() {
-      let err = null
-      try {
-        const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/transactions', { method: 'GET' })
-        const mempoolTransactions = await res.json() as MempoolTxes
-        console.log(mempoolTransactions)
-        setMempoolTransactions(mempoolTransactions)
-
-      } catch (error) {
-        // setMempoolTransactions(null)
-        err = error
-        // alert('Network Error- Check your Internet connection')
-      } finally {
-        console.log(err)
-        if (err) {
-          const res = await fetch('https://api.bitaps.com/bgl/v1/blockchain/mempool/transactions', { method: 'GET' })
-          const mempoolTransactions = await res.json() as MempoolTxes
-          console.log(mempoolTransactions)
-          setMempoolTransactions(mempoolTransactions)
-
-        }
-      }
-    }
-    getMempoolTxes()
-    const intervalId = setInterval(() => {
-      getMempoolTxes()
     }, REFRESH_TIME_INTERVAL)
     return () => {
       clearInterval(intervalId)
@@ -270,7 +239,7 @@ function App() {
           <p>Max Transaction size in pool: {transactions.size.max.value} bytes</p>
           <p>Min Transaction size in pool: {transactions.size.min.value} bytes</p>
           <h3>Amount</h3>
-          <p>Total transaction amount in the mempool: {mempool.data.inputs.amount.total}</p>
+          <p>Total transaction amount in the mempool: {satoshiToBGL(mempool.data.inputs.amount.total)} BGL</p>
           <h3>Segwit Transactions</h3>
           <p>SegWit Transaction count: {transactions.segwitCount} Transactions</p>
         </div>
@@ -343,9 +312,10 @@ function App() {
   }
 
   const renderMetrics = () => {
-    const ageMap = mempool?.data.inputs.ageMap
 
-    if (ageMap?.['1y']) {
+    const ageMap = mempool?.data.inputs.ageMap
+    if (mempoolTransactions?.data.count) {
+      console.log(ageMap)
       // const DATA_COUNT = 3; // 3 year gap
       // @ts-ignore
       // const NUMBER_CFG = { count: DATA_COUNT, min: ageMap["1y"].amount, max: ageMap["3y"].amount };
@@ -415,11 +385,11 @@ function App() {
       <div className="mempool-container">
         <div className="mempool">
           <div className="tab">
-            <button className="tablinks" onClick={() => openTab('metrics')}>
-              Mempool Overview
-            </button>
             <button className="tablinks" onClick={() => openTab('mempool')}>
               Mempool State
+            </button>
+            <button className="tablinks" onClick={() => openTab('metrics')}>
+              Mempool Overview
             </button>
             <button className="tablinks" onClick={() => openTab('transactions')}>
               Mempool Transactions
@@ -465,7 +435,7 @@ function App() {
             </div>
 
             <div id="metrics" className="tabcontent" style={{ display: activeTab === 'metrics' ? 'block' : 'none' }}>
-              {mempoolTransactions?.data.count ? (<>
+              {mempool?.data.inputs.count ? (<>
 
                 {renderMetrics()}
 
